@@ -1,0 +1,15 @@
+
+<div *ngIf="messages.length != 0 && getChartShow()">
+  <canvas
+    baseChart
+    [chartType]="'bar'"
+    [datasets]="chartData"
+    [labels]="label"
+    [options]="chartOptions"
+    [colors]="color"
+    [legend]="false"
+    (chartClick)="onChartClick($event)">
+  </canvas>
+</div>
+
+
