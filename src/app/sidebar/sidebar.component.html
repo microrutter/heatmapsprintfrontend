@@ -1,0 +1,56 @@
+
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="javascript:void(0);">
+          <span data-feather="home"></span>
+          Current Projects <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link btn-outline-secondary" href="javascript:void(0);" (click)="getHeatMapKmeans()">
+          <span data-feather="file"></span>
+          LCPA
+        </a>
+      </li>
+
+    </ul>
+
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <span>Actions</span>
+      <a class="d-flex align-items-center text-muted" href="#">
+        <span data-feather="plus-circle"></span>
+      </a>
+    </h6>
+    <ul class="nav flex-column mb-2">
+      <div *ngIf="this.getShow()">
+        <li class="nav-item">
+          <a class="nav-link btn-outline-secondary" href="javascript:void(0);" (click)="relabelSprint()">
+            <span data-feather="file-text"></span>
+            Re-label Sprint
+          </a>
+        </li>
+        <li class="nav-item">
+          <label class="nav-link">
+            <span data-feather="file-text"></span>
+            Train Cluster Model:
+          </label>
+        </li>
+        <li class="nav-item">
+          <div class="input-group mb-3">
+            <input type="number" class="form-control col-sm-3" placeholder="8" aria-label="8" aria-describedby="basic-addon2" min="0" #cluster>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" (click)="postRe(cluster)">Train Cluster</button>
+            </div>
+          </div>
+
+        </li>
+      </div>
+
+
+    </ul>
+  </div>
+</nav>
+
+

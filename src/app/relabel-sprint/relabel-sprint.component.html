@@ -1,0 +1,47 @@
+<div *ngIf="this.getShow()">
+  <h2>Current Sprint</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+      <tr>
+        <th>Issue Key</th>
+        <th>Summary</th>
+        <th>Cluster Label</th>
+        <th>Supervised Training Model Label</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let emp of this.getSprint()">
+        <td><a href="https://www.acx.link/jira/browse/{{emp.Issue}}" target="_blank">{{emp.Issue}}</a></td>
+        <td>{{emp.Summary}}</td>
+        <td>{{emp.Label}}</td>
+        <td>
+          <div class="form-group">
+            <label for="{{emp.Issue}}">Choose predefined label:</label>
+            <div class="input-group">
+              <select class="custom-select"  id="{{emp.Issue}}" #option>
+                <option selected>Choose...</option>
+                <option *ngFor="let l of this.getLabel()" value="{{l}}">{{l}}</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="relab(option)">Select Label</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label>Create your own label:</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Type own label" aria-label="Recipient's username" aria-describedby="basic-addon2" id="{{emp.Issue}}" #own>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" (click)="this.relab(own)">Enter Own Label</button>
+              </div>
+            </div>
+          </div>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
