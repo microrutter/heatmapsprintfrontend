@@ -1,14 +1,20 @@
-export class CurrentSprintService {
+export class RelabelSprintService {
 
   sprint = [];
+  label = [];
   show = false;
 
   addInstance(rel: {'Issue': string, 'Summary': string, 'Description': string, 'Label': string}) {
     this.sprint.push(rel);
   }
 
+  addLabel(rel: string) {
+    this.label.push(rel);
+  }
+
   clearInstance() {
     this.sprint.length = 0;
+    this.label.length = 0;
   }
 
   setShow(value: boolean) {

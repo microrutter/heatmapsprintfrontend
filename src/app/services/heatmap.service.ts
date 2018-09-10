@@ -5,7 +5,6 @@ export class HeatMapService {
   show = false;
 
   addInstance(rel: {'data': number, 'label': string}) {
-    console.log(rel.data);
     this.label.push(rel.label);
     this.data.push((rel.data));
   }
@@ -16,7 +15,6 @@ export class HeatMapService {
   }
 
   setShow(value: boolean) {
-    console.log(value);
     this.show = value;
   }
 }

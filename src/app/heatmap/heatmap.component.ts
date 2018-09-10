@@ -19,7 +19,6 @@ export class HeatmapComponent {
   ];
 
   getLabel() {
-    console.log(this.hm.label);
     return this.hm.label;
   }
 
@@ -37,7 +36,6 @@ export class HeatmapComponent {
   }
 
   getShow() {
-    console.log(this.hm.show)
     return this.hm.show;
   }
 

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 import {chart} from 'chart.js';
 
 import { AppComponent } from './app.component';
@@ -22,6 +23,9 @@ import { HeatmapComponent } from './heatmap/heatmap.component';
 import {HeatMapService} from './services/heatmap.service';
 import { CurrentSprintComponent } from './current-sprint/current-sprint.component';
 import {CurrentSprintService} from './services/currentSprint.service';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { RelabelSprintComponent } from './relabel-sprint/relabel-sprint.component';
+import { RelabelSprintService } from './services/relabelSprint.service';
 
 
 
@@ -32,7 +36,9 @@ import {CurrentSprintService} from './services/currentSprint.service';
     ChartComponent,
     AppNavbarComponent,
     HeatmapComponent,
-    CurrentSprintComponent
+    CurrentSprintComponent,
+    SidebarComponent,
+    RelabelSprintComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,8 @@ import {CurrentSprintService} from './services/currentSprint.service';
     InstanceCountService,
     CompletedDownloadsService,
     HeatMapService,
-    CurrentSprintService
+    CurrentSprintService,
+    RelabelSprintService
   ],
   bootstrap: [
     AppComponent
