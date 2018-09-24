@@ -1,6 +1,6 @@
 {
-  "name": "cognitive QA",
-  "version": "0.0.0",
+  "name": "Cognitive_QA",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -41,7 +41,8 @@
     "ngx-pagination": "^3.0.1",
     "popper.js": "^1.12.5",
     "rxjs": "^5.4.2",
-    "zone.js": "^0.8.14"
+    "zone.js": "^0.8.14",
+    "ng2-bootstrap-modal": "^1.0.1"
   },
   "devDependencies": {
     "@angular/cli": "^1.5.0-beta.4",
