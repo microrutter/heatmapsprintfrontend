@@ -7,6 +7,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import {HeatMapService} from './heatmap.service';
 import {CurrentSprintService} from './currentSprint.service';
 import {RelabelSprintService} from './relabelSprint.service';
+import {ProjectService} from './projects.services';
 
 @Injectable()
 export class RestService {
@@ -16,7 +17,8 @@ export class RestService {
               private spinnerService: Ng4LoadingSpinnerService,
               private hm: HeatMapService,
               private cs: CurrentSprintService,
-              private rl: RelabelSprintService) {}
+              private rl: RelabelSprintService,
+              private pr: ProjectService) {}
 
   processHeatMap(data: any) {
     const dataTransform: any[] = data;
@@ -50,8 +52,18 @@ export class RestService {
     }
   }
 
+  processProjects(data: any) {
+    if (data.length > 0) {
+      for (const pro of data)
+      {
+        console.log(pro);
+        this.pr.addProjects(pro);
+      }
+    }
+  }
+
   getHeatMap() {
-    this.hm.clearInstance()
+    this.hm.clearInstance();
     this.spinnerService.show();
     return this.http.get('http://127.0.0.1:5000/heatmap').map(
       response => {
@@ -62,10 +74,11 @@ export class RestService {
     );
   }
 
-  getHeatMapKmeans() {
+  getHeatMapKmeans(pro: string) {
     this.hm.clearInstance();
+    this.pr.setCurrent(pro);
     this.spinnerService.show();
-    return this.http.get('http://127.0.0.1:5000/kmeans').map(
+    return this.http.get('http://127.0.0.1:5000/kmeans?project=' + pro).map(
       response => {
         this.processHeatMap(response);
         this.hm.setShow(true);
@@ -77,7 +90,7 @@ export class RestService {
   getCurrentSprint() {
     this.cs.clearInstance();
     this.spinnerService.show();
-    return this.http.get('http://127.0.0.1:5000/sprint').map(
+    return this.http.get('http://127.0.0.1:5000/sprint?project=' + this.pr.getCurrent()).map(
       response => {
         this.processCurrentSprint(response);
         this.cs.setShow(true);
@@ -89,7 +102,7 @@ export class RestService {
   getUnlabelledSprint() {
     this.rl.clearInstance();
     this.spinnerService.show();
-    return this.http.get('http://127.0.0.1:5000/relabel').map(
+    return this.http.get('http://127.0.0.1:5000/relabel?project=' + this.pr.getCurrent()).map(
       response => {
         this.processRelabel(response);
         this.spinnerService.hide();
@@ -99,21 +112,35 @@ export class RestService {
 
   postRetrian(num) {
     this.spinnerService.show();
-    return this.http.post('http://127.0.0.1:5000/retrain?cluster=' + num, null);
+    return this.http.post('http://127.0.0.1:5000/retrain?cluster=' + num + '&project=' + this.pr.getCurrent(), null);
   }
 
   postRelabelSprint(ident, label) {
-    return this.http.put('http://127.0.0.1:5000/label/' + ident + '?label=' + label, null);
+    return this.http.put('http://127.0.0.1:5000/label/' + ident + '?label=' + label + '&project=' + this.pr.getCurrent(), null);
   }
 
   getLabels() {
     this.spinnerService.show();
-    return this.http.get('http://127.0.0.1:5000/labels').map(
+    return this.http.get('http://127.0.0.1:5000/labels?project=' + this.pr.getCurrent()).map(
       response => {
         this.processLabel(response);
         this.rl.setShow(true);
         this.spinnerService.hide();
       }
     );
+  }
+
+  getProjects() {
+    this.spinnerService.show();
+    return this.http.get('http://127.0.0.1:5000/projects').map(
+      response => {
+        this.processProjects(response);
+        this.spinnerService.hide();
+      }
+    );
+  }
+
+  putNewProject(title, desc) {
+    return this.http.put('http://127.0.0.1:5000/add?project=' + title + '&description=' + desc, null);
   }
 }

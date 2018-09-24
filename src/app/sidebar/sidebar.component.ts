@@ -1,9 +1,12 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {RestService} from '../services/rest.service';
 import {HeatMapService} from '../services/heatmap.service';
 import {InstanceCountService} from '../services/instanceCount.service';
 import {CurrentSprintService} from '../services/currentSprint.service';
 import {RelabelSprintService} from '../services/relabelSprint.service';
+import {ProjectService} from '../services/projects.services';
+import { AddProjectComponent } from '../add-project/add-project.component';
+import { DialogService } from 'ng2-bootstrap-modal';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,18 +15,42 @@ import {RelabelSprintService} from '../services/relabelSprint.service';
 })
 export class SidebarComponent {
 
-  constructor(private rest: RestService, private instService: InstanceCountService,
+  constructor(private rest: RestService,
+              private instService: InstanceCountService,
               private hm: HeatMapService,
               private cs: CurrentSprintService,
-              private rl: RelabelSprintService) { }
+              private rl: RelabelSprintService,
+              private pr: ProjectService,
+              private dialogService: DialogService) {
+    this.rest.getProjects().subscribe(
+      (response: any) => this.handleResponse(response),
+      (error: any) => console.log(error)
+    );
+  }
 
   public alerts = [];
 
   i = 0;
 
-  getHeatMapKmeans() {
+  showConfirm() {
+      const disposable = this.dialogService.addDialog(AddProjectComponent, {
+      title: 'Add Project',
+      message: 'Please add project title and description'})
+      .subscribe((isConfirmed) => {
+        //We get dialog result
+        if (isConfirmed) {
+          this.pr.clearInstance();
+          this.rest.getProjects().subscribe(
+            (response: any) => this.handleResponse(response),
+            (error: any) => console.log(error)
+          );
+        }
+      });
+  }
+
+  getHeatMapKmeans(value) {
     this.common();
-    this.rest.getHeatMapKmeans().subscribe(
+    this.rest.getHeatMapKmeans(value).subscribe(
       (response: any) => this.handleResponse(response),
       (error: any) => console.log(error)
     );
@@ -53,7 +80,7 @@ export class SidebarComponent {
 
   getRetrainedData(t) {
     if (t) {
-      this.getHeatMapKmeans();
+      this.getHeatMapKmeans(this.pr.getCurrent());
     }
   }
 
@@ -97,6 +124,11 @@ export class SidebarComponent {
     this.hm.setShow(false);
     this.cs.setShow(false);
     this.rl.setShow(false);
+
+  }
+
+  getProjectList () {
+    return this.pr.getProjects();
   }
 
   getShow() {

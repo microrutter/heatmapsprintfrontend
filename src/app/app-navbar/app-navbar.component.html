@@ -1,11 +1,13 @@
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript:void(0);">Cognitive QA</a>
 
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="javascript:void(0);" (click)="getHeatMapKmeans()">LCPA</a>
-    </li>
-  </ul>
+  <div *ngIf="getCurrentProject().length > 0">
+    <a class="navbar-text" href="javascript:void(0);">
+      Current Working project {{getCurrentProject()}}
+    </a>
+  </div>
+
+
 </nav>
 
 

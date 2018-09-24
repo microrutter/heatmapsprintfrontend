@@ -8,12 +8,19 @@
           Current Projects <span class="sr-only">(current)</span>
         </a>
       </li>
+      <div *ngIf="this.getProjectList().length > 0">
+        <li class="nav-item" *ngFor="let title of this.getProjectList()">
+          <a class="nav-link active" href="javascript:void(0);" (click)="getHeatMapKmeans(title)">
+            {{title}}
+          </a>
+        </li>
+      </div>
       <li class="nav-item">
-        <a class="nav-link btn-outline-secondary" href="javascript:void(0);" (click)="getHeatMapKmeans()">
-          <span data-feather="file"></span>
-          LCPA
-        </a>
+        <button type="button" class="btn btn-primary" (click)=showConfirm()>
+          Add Project
+        </button>
       </li>
+
 
     </ul>
 
@@ -51,6 +58,7 @@
 
     </ul>
   </div>
+
 </nav>
 
 

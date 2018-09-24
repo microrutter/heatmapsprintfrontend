@@ -26,6 +26,9 @@ import {CurrentSprintService} from './services/currentSprint.service';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RelabelSprintComponent } from './relabel-sprint/relabel-sprint.component';
 import { RelabelSprintService } from './services/relabelSprint.service';
+import {ProjectService} from './services/projects.services';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 
 
@@ -38,7 +41,8 @@ import { RelabelSprintService } from './services/relabelSprint.service';
     HeatmapComponent,
     CurrentSprintComponent,
     SidebarComponent,
-    RelabelSprintComponent
+    RelabelSprintComponent,
+    AddProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import { RelabelSprintService } from './services/relabelSprint.service';
     AngularFontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    BootstrapModalModule.forRoot({container: document.body}),
     NgBootstrapFormValidationModule.forRoot(),
     Ng4LoadingSpinnerModule.forRoot(),
     NgbModule.forRoot()
@@ -59,7 +64,11 @@ import { RelabelSprintService } from './services/relabelSprint.service';
     CompletedDownloadsService,
     HeatMapService,
     CurrentSprintService,
-    RelabelSprintService
+    RelabelSprintService,
+    ProjectService
+  ],
+  entryComponents: [
+    AddProjectComponent
   ],
   bootstrap: [
     AppComponent
