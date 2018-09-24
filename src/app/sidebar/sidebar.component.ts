@@ -5,8 +5,7 @@ import {InstanceCountService} from '../services/instanceCount.service';
 import {CurrentSprintService} from '../services/currentSprint.service';
 import {RelabelSprintService} from '../services/relabelSprint.service';
 import {ProjectService} from '../services/projects.services';
-import { AddProjectComponent } from '../add-project/add-project.component';
-import { DialogService } from 'ng2-bootstrap-modal';
+
 
 @Component({
   selector: 'app-sidebar',
@@ -20,8 +19,7 @@ export class SidebarComponent {
               private hm: HeatMapService,
               private cs: CurrentSprintService,
               private rl: RelabelSprintService,
-              private pr: ProjectService,
-              private dialogService: DialogService) {
+              private pr: ProjectService) {
     this.rest.getProjects().subscribe(
       (response: any) => this.handleResponse(response),
       (error: any) => console.log(error)
@@ -31,22 +29,6 @@ export class SidebarComponent {
   public alerts = [];
 
   i = 0;
-
-  showConfirm() {
-      const disposable = this.dialogService.addDialog(AddProjectComponent, {
-      title: 'Add Project',
-      message: 'Please add project title and description'})
-      .subscribe((isConfirmed) => {
-        //We get dialog result
-        if (isConfirmed) {
-          this.pr.clearInstance();
-          this.rest.getProjects().subscribe(
-            (response: any) => this.handleResponse(response),
-            (error: any) => console.log(error)
-          );
-        }
-      });
-  }
 
   getHeatMapKmeans(value) {
     this.common();
